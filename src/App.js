@@ -1,23 +1,38 @@
-import logo from './logo.svg';
+/** @jsxImportSource @emotion/react */
+import { css } from '@emotion/react'
+
+import { useEffect, useRef } from 'react'
+import { TweenLite } from 'gsap'
+
 import './App.css';
+import Gallery from './components/Gallery';
+import Navbar from './components/Navbar';
+
+import data from './assets/data';
+
+const appStyles = css`
+display: flex;
+height: 100vh;
+align-items: stretch;
+
+visibility: hidden;
+`
 
 function App() {
+  let app = useRef(null)
+
+  useEffect(() => {
+    TweenLite.to(app, 0, {
+      css: {
+        visibility: 'visible'
+      }
+    })
+  }, [])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="App" css={appStyles} ref={el => app = el}>
+      <Navbar />
+      <Gallery data={data} />
     </div>
   );
 }
